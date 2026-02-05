@@ -15,15 +15,12 @@ const CardsHolder = () => {
           "https://jsonplaceholder.typicode.com/posts",
         );
         const data = await result.json();
-        setData(data);
-        setLoading(false);
       } catch (error) {
-        setError(error.message);
-        setLoading(false);
+        console.log(error);
       }
     }
     fetchPosts();
-  }, []);
+  });
 
   const limitData = data.slice(0, 10);
 

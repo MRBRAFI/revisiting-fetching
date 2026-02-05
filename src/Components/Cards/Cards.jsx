@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Cards = ({ post }) => {
+  const [userData, setUserData] = useState("");
   const { body, title, userId, id } = post;
 
-  console.log(post);
+  const fetchUsersById = (id) => {
+    async function fetchUser() {
+      try {
+        const result = await fetch(
+          `https://jsonplaceholder.typicode.com/users/${id}`,
+        );
+        const data = await result.json();
+        setUserData(data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchUser();
+  };
+
   return (
     <div>
       <div className="w-80 h-90 bg-gray-400 rounded-2xl p-3">
@@ -14,7 +29,10 @@ const Cards = ({ post }) => {
           <div className="flex justify-between">
             <div className="bg-gray-300 p-2 rounded-xl">User Id: {userId}</div>
             <div className="bg-gray-300 p-2 rounded-xl">
-              <button className="hover:cursor-pointer hover:bg-gray-400 px-2 rounded transition">
+              <button
+                onClick={() => fetchUsersById(id)}
+                className="hover:cursor-pointer hover:bg-gray-400 px-2 rounded transition"
+              >
                 Post Id: {id}
               </button>
             </div>
